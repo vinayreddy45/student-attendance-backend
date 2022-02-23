@@ -32,9 +32,9 @@ class Subject(models.Model):
 
     def __str__(self):
         return self.name + ':' + str(self.date)
-    
+
     class Meta:
-        unique_together = ['name', 'branch']
+        unique_together = ['name', 'branch', 'date']
 
 class Attendance(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='attendance_list')
@@ -42,6 +42,7 @@ class Attendance(models.Model):
     isPresent = models.BooleanField(default=False)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
     date = models.DateField(auto_now=True)
+    semester = models.IntegerField(default=1)
 
     def __str__(self):
         return str(self.student) + ":" + str(self.subject)

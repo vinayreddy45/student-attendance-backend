@@ -12,6 +12,11 @@ class SubjectListAPI(APIView):
     def get(self, request):
         q = Q(date=datetime.date.today())
         subjects = Subject.objects.filter(q)
+
+        query = request.GET.get("semester")
+        if query:
+            subjects = subjects.filter(semester=int(query))
+
         serializer = SubjectSerializer(subjects, many=True)
 
         return Response(serializer.data)
